@@ -9,47 +9,37 @@ namespace BinarySearchTree
     class BinarySearchTree
     {
         //root node
+        private Node child;
         private Node root;
         public BinarySearchTree()
         {
             root = null;
         }
-        public void CreateTree()
+        public void Add(int child)
         {
-            Console.Write("Please enter number of nodes in the tree");
-            int numberNodes = int.Parse(Console.ReadLine());
-            if(numberNodes == 0)
+            Node node = new Node(child);
+            if (root == null)
             {
-                return;
+                root = node;
             }
-            for (int i = 1; i<= numberNodes; i++)
+            else
             {
-                Console.WriteLine("Please enter an element to add to the tree");
-                int data = int.Parse(Console.ReadLine());
-                MakeChild(data);
+                Node parent = root;
+
+                while (parent.leftChild != null || parent.rightChild != null)
+                {
+                    if (child <= parent.data)
+                    {
+                        parent.leftChild = node;
+                    }
+                    else if (child > node.data)
+                    {
+                        parent.rightChild = node;
+                    }
+                }
             }
         }
-        public void InsertRoot(int data)
-        {
-            Node temp = new Node(data);
-            temp = root;
-        }
-       public void MakeChild(int data)
-        {
-            Node node;
-            Node temp = new Node(data);
-            node = root;
-            while(node.leftChild != null && temp.data <= root.data)
-            {
-                node = node.leftChild;
-            }
-            node.leftChild = temp;
-            while(node.rightChild != null && temp.data > root.data)
-            {
-                node = node.rightChild;
-            }
-            node.rightChild = temp;
-        }
+          
         public bool SearchTree(int x)
         {
             Node node = root;
@@ -62,20 +52,24 @@ namespace BinarySearchTree
                 while (x < node.data)
                 {
                     node = node.leftChild;
+                    Console.WriteLine("moved left");
                 }
                 while (x > node.data)
                 {
                     node = node.rightChild;
+                    Console.WriteLine("moved right");
                 }
             }
             if (node == null)
             {
                 Console.WriteLine(x + " was not found in the tree");
+                Console.ReadLine();
                 return false;
             }
             else
             {
                 Console.WriteLine(x + " was found in the tree");
+                Console.ReadLine();
                 return true;
             }
         }
