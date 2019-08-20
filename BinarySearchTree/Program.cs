@@ -22,7 +22,7 @@ namespace BinarySearchTree
             testTree.Add(121);
             testTree.Add(75);
 
-            testTree.SearchTree(87);
+            testTree.SearchTree(69);
         }
     }
 }

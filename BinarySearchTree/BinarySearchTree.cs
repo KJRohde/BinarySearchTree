@@ -1,45 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BinarySearchTree
 {
-    class BinarySearchTree
+    public class BinarySearchTree
     {
         //root node
-        private Node child;
         private Node root;
         public BinarySearchTree()
         {
             root = null;
         }
-        public void Add(int child)
+        public void Add(int data)
         {
-            Node node = new Node(child);
+            Node node = new Node(data);
             if (root == null)
             {
-                root = node;
+                root = new Node(data);
             }
             else
             {
                 Node parent = root;
-
-                while (parent.leftChild != null || parent.rightChild != null)
+                while (true)
                 {
-                    if (child <= parent.data)
+                    if (node.data <= parent.data)
                     {
-                        parent.leftChild = node;
+                        if (parent.leftChild == null)
+                        {
+                            parent.leftChild = new Node(data);
+                            break;
+                        }
+                        else
+                        {
+                            parent = parent.leftChild;
+                        }
                     }
-                    else if (child > node.data)
+                    if (node.data > parent.data)
                     {
-                        parent.rightChild = node;
+                        if (parent.rightChild == null)
+                        {
+                            parent.rightChild = new Node(data);
+                            break;
+                        }
+                        else
+                        {
+                            parent = parent.rightChild;
+                        }
                     }
                 }
             }
         }
-          
+
         public bool SearchTree(int x)
         {
             Node node = root;
@@ -47,31 +57,24 @@ namespace BinarySearchTree
             {
                 if (node.data == x)
                 {
-                    break;
+                    Console.WriteLine(x + " was found in the tree");
+                    Console.ReadLine();
+                    return true;
                 }
-                while (x < node.data)
+                else if (x < node.data)
                 {
                     node = node.leftChild;
                     Console.WriteLine("moved left");
                 }
-                while (x > node.data)
+                else if (x > node.data)
                 {
                     node = node.rightChild;
                     Console.WriteLine("moved right");
                 }
             }
-            if (node == null)
-            {
-                Console.WriteLine(x + " was not found in the tree");
-                Console.ReadLine();
-                return false;
-            }
-            else
-            {
-                Console.WriteLine(x + " was found in the tree");
-                Console.ReadLine();
-                return true;
-            }
+            Console.WriteLine(x + " was not found in the tree");
+            Console.ReadLine();
+            return false;
         }
     }
 }
